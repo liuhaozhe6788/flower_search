@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="cn">
+    <head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></head>
+    <body>
+        <div class="container">
+            <h1>一个简单的花卉识别系统</h1>
+            <form method="POST" enctype="multipart/form-data">
+                <input type="file" name="query_img"><br>
+                <input type="submit">
+            </form>
+            <h2>上传的图片：</h2>
+            {% if query_path %}
+            <img src="{{ query_path }}" width="300px">
+            {% endif %}
+            <h2>识别结果：</h2>
+            <p style="font-size:150%;">{{ variable }}</p>
+            <h2>相似图片：</h2>
+            {% for score in scores %}
+            <figure style="float: left; margin-right: 20px; margin-bottom: 20px;">
+                <img src="{{ score }}" height="200px">
+            </figure>
+            {% endfor %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+1,向日葵,Helianthus
+2,梅花,plum blossoms
+3,牡丹,peony
+4,兰花,orchid
+5,桂花,sweet osmanthus
+6,水仙花,narcissus
+7,玫瑰,rose
+8,菊花,chrysanthemum
+9,凤仙花,balsam
+10,郁金香,tulip
+11,马蹄莲,zantedeschia aethiopica
+12,蝴蝶兰,butterfly orchid
+13,扶桑花,Chinese hibiscus
+14,山茶花,camellia
+15,栀子花,cape jasmine
+16,杜鹃花,rhododendron
+17,灯笼花,Chinese enkianthus
+18,玉兰花,mangnolia

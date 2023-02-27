@@ -1,0 +1,15 @@
+tabulate
+mysql-connector-python
+numpy
+requests
+beautifulsoup4
+xlwt
+tensorflow
+Pillow
+Flask
+Send2Trash
+matplotlib
+lxml
+selenium
+webdriver_manager
+scikit-learn
