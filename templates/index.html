@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="cn">
     <head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></head>
-    <body>
+    <body style="background-image: url('static/flower_bg.jpg');">
         <div class="container">
             <h1>A FLower Search System🌷</h1>
             <form method="POST" enctype="multipart/form-data">
@@ -15,14 +15,16 @@
             <h2>Flower name：</h2>
             <p style="font-size:150%;">{{ variable }}</p>
             <h2>More images from the web🌐：</h2>
+            <div>
             {% for url, dist in scores %}
-            <div style=" display: grid;">
-                <figure style="float: left; margin-right: 20px; margin-bottom: 20px;">
-                    <img src="{{ url }}" height="200px">
-                </figure>
-                <label>Manhattan distance：{{ dist }}</label>
-            </div>
+                <div style="float: left; margin-right: 20px; margin-bottom: 20px;">
+                    <figure>
+                        <img src="{{ url }}" height="200px">
+                    </figure>
+                    <label>Manhattan distance：{{ dist }}</label>
+                </div>
             {% endfor %}
+            </div>  
         </div>
     </body>
 </html>
