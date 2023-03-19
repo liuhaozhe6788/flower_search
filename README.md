@@ -6,7 +6,8 @@ A flower search application using VGG19 and KNN
 
 2. install MySQL. User: `root`, Password: `12345678`. Create a table named `flower_data`.
 
-##Run
+## Run
+
 1. run image scrapper:
 ```
 python flower_scraper.py
