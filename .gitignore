@@ -1,4 +1,5 @@
 *__pycache__
 *.vscode
 *static/uploaded
-*data
+*data/
+*log/
