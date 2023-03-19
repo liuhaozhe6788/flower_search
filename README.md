@@ -1,4 +1,4 @@
-# flower_search
+# A Flower Search System🌷
 A flower search application using VGG19 and KNN
 
 ## Prerequistes
