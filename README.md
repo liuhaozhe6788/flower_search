@@ -1,5 +1,6 @@
 # A Flower Search System🌷
 A flower search application using VGG19 and KNN
+![alt text](https://github.com/liuhaozhe6788/flower_search/blob/master/demo.png?raw=true)
 
 ## Prerequistes
 1. install chrome and chromedriver
