@@ -13,3 +13,4 @@ lxml
 selenium
 webdriver_manager
 scikit-learn
+coloredlogs

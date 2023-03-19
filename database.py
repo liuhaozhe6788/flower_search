@@ -10,24 +10,22 @@ myDatabase_name = 'flower_data'
 myTables_name = ['train_imgs', 'val_imgs', 'test_imgs']  
 
 flowers_demapper = {
-    1: '向日葵',
-    2: '梅花',
-    3: '牡丹',
-    4: '兰花',
-    5: '桂花',
-    6: '水仙花',
-    7: '玫瑰',
-    8: '菊花',
-    9: '凤仙花',
-    10: '郁金香',
-    11: '马蹄莲',
-    12: '蝴蝶兰',
-    13: '扶桑花',
-    14: '山茶花',
-    15: '栀子花',
-    16: '杜鹃花',
-    17: '灯笼花',
-    18: '玉兰花',
+    1: 'sunflower',
+    2: 'plum blossoms',
+    3: 'peony',
+    4: 'sweet osmanthus',
+    5: 'narcissus',
+    6: 'rose',
+    7: 'chrysanthemum',
+    8: 'balsam',
+    9: 'tulip',
+    10: 'zantedeschia aethiopica',
+    11: 'butterfly orchid',
+    12: 'Chinese hibiscus',
+    13: 'camellia',
+    14: 'cape jasmine',
+    15: 'rhododendron',
+    16: 'mangnolia',
 }
 
 class Database:
@@ -69,7 +67,7 @@ class Database:
         :param table_name: 表格名称
         :return:
         """
-        self._mycursor.execute(f"create table if not exists {table_name} (id int not null auto_increment, img_url varchar(255), \
+        self._mycursor.execute(f"create table if not exists {table_name} (id int not null auto_increment, img_url varchar(5000), \
                          result int unsigned, feature longtext not null, primary key (id))")
         self._mydb.commit()
         self._mycursor.execute("show tables")
@@ -149,20 +147,20 @@ class Database:
         """
         self._mycursor.execute(f"select result from {table_name} where id = {iter_id}")
         return self._mycursor.fetchone()[0]
-
+    
     def select_all_train_features(self, table_name: str) -> list:
         """
         选择所有训练集图片的特征向量
         :param table_name: 表格名称
         :return: 所有特征向量
         """
-        self._mycursor.execute(f"select feature from {table_name}")
+        self._mycursor.execute(f"select id, feature from {table_name} where feature <>'*'")
         features = self._mycursor.fetchall()
 
         # 将所有特征向量转换为二维numpy序列
         features_array = []
-        for fe in features:  
-            features_array.append(eval(fe[0]))
+        for item in features:  
+            features_array.append((item[0], eval(item[1])))
         return np.array(features_array)
 
     def select_xy_from_a_table(self, table_name: str) -> list:
@@ -171,7 +169,7 @@ class Database:
         :param table_name: 表格名称
         :return: 所有特征向量
         """
-        self._mycursor.execute(f"select feature, result from {table_name}")
+        self._mycursor.execute(f"select feature, result from {table_name}  where feature <>'*'")
         data = self._mycursor.fetchall()
 
         return [[eval(val[0]), val[1]] for val in data]
@@ -183,7 +181,7 @@ class Database:
         :param flower_class: 花卉的种类
         :return: 某种花卉的所有图片URL
         """
-        self._mycursor.execute(f"select img_url from {table_name} where result = {flower_class}")
+        self._mycursor.execute(f"select img_url, feature from {table_name} where result = {flower_class} and feature <>'*'")
         return self._mycursor.fetchall()
 
     def data(self, table_name: str, table_headers: list) -> str:

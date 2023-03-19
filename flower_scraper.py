@@ -1,13 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
 import xlwt
+import logging
 from sklearn.model_selection import train_test_split
 
 import database
 from image_scraper.GoogleImageScraper import GoogleImageScraper
+from log_setup import setup_logging
 
-num_class = 2
-num_imgs_per_class = 10
+num_class = 16
+num_imgs_per_class = 400
 
 test_ratio = 0.1
 val_ratio = 1/9
@@ -25,11 +27,11 @@ def web_scraping(class_num, imgs_num):
     :return
     """
     # 网络花卉图片爬虫初始化
-    webdriver_path = "/usr/bin/chromedriver"
+    webdriver_path = "webdriver/chromedriver"
     headless = True
     min_resolution=(0,0)
     max_resolution=(9999,9999)
-    language = 2  #1按中文搜索，2按英文搜索
+    languages = [1, 2]  #1按中文搜索，2按英文搜索
 
     flowers_list = []
     with open('./static/txt/flowers_list.txt', 'r', encoding='utf-8') as file:
@@ -46,14 +48,20 @@ def web_scraping(class_num, imgs_num):
         newDatabase.create_table(table)
 
     # 爬取花卉图片
-    for i in range(class_num):
+    for i in range(11, class_num):
         search_id = i+1
-        search_key = flowers_list[i][language]
-        print(f"scraping flower name: {search_key}")
+        search_key = flowers_list[i][languages[0]]
+        logger.info(f"scraping flower name: {search_key}")
 
-        image_scrapper = GoogleImageScraper(webdriver_path, imgs_num, search_key, headless, min_resolution, max_resolution)
-        X = image_scrapper.find_image_urls() 
-        
+        image_scrapper = GoogleImageScraper(webdriver_path, int(imgs_num/2), search_key, headless, min_resolution, max_resolution, logger)
+        X = []
+        X = image_scrapper.find_image_urls(X) 
+
+        search_key = flowers_list[i][languages[1]]
+        logger.info(f"scraping flower name: {search_key}")
+        image_scrapper = GoogleImageScraper(webdriver_path, int(imgs_num/2), search_key, headless, min_resolution, max_resolution, logger)   
+        X = image_scrapper.find_image_urls(X)    
+    
         # for j in range(imgs_num):
         #     # 将图片的URL（str）和种类结果（非负整数）存入excel表格中
         #     work_sheet.write(i * imgs_num + j, 0, image_urls[j][0])
@@ -78,4 +86,6 @@ def web_scraping(class_num, imgs_num):
     newDatabase.close()
 
 if __name__ == "__main__":
+    setup_logging(log_name="image_scraper")
+    logger = logging.getLogger(__name__)
     web_scraping(num_class, num_imgs_per_class)

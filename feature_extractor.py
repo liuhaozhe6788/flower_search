@@ -1,8 +1,6 @@
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg19 import VGG19, preprocess_input
 from tensorflow.keras.models import Model
-import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 import numpy as np
 
 class FeatureExtractor:
@@ -10,7 +8,7 @@ class FeatureExtractor:
         """
         VGG19模型的初始化
         """
-        self.base_model = VGG19(weights="imagenet")  # 使用了转移学习
+        self.base_model = VGG19(weights="imagenet") 
         self.model = Model(inputs=self.base_model.input, outputs=self.base_model.get_layer("fc1").output)  # fc1层输出
 
     def extract(self, imgs):
