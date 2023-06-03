@@ -56,7 +56,7 @@ def validate(neighbor_range):
 def test(num_of_neighbors):
     test_xy_data = mydatabase.select_xy_from_a_table(myTables_name[2]) 
     accu = calc_accu(test_xy_data, train_features, train_idx, num_of_neighbors)
-    print(f"测试集的准确率为{accu}%")
+    print(f"测试集的准确率为{accu*100}%")
 
 if __name__ == "__main__":
     start = 15
@@ -66,7 +66,8 @@ if __name__ == "__main__":
     train_features = mydatabase.select_all_train_features(myTables_name[0])  
     train_idx, train_features = list(zip(*train_features))
     train_features = np.array(train_features, dtype=object)
-    num_of_neighbors = validate((start, end))
+    # num_of_neighbors = validate((start, end))
+    num_of_neighbors = 19  # validation results at val_res/accu.png
     test(num_of_neighbors)
     mydatabase.close()
 
